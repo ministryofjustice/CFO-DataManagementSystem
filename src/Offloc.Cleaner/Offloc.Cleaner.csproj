@@ -9,6 +9,9 @@
 
 	<ItemGroup>
 		<PackageReference Include="DocumentFormat.OpenXml" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" />
 	</ItemGroup>
 
 	<ItemGroup>

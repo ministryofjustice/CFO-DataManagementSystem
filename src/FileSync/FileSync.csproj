@@ -17,6 +17,8 @@
 	  <PackageReference Include="AWSSDK.S3" />
 	  <PackageReference Include="AWSSDK.SecurityToken" />
 	  <PackageReference Include="CommunityToolkit.Aspire.Minio.Client" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" />
 	</ItemGroup>
 
   <ItemGroup>
