@@ -7,7 +7,7 @@ using Infrastructure.Repositories.Clustering;
 
 namespace Infrastructure.Services.Aggregation;
 
-public class AggregateService(IClusteringRepository ClusteringRepository, DeliusContext DeliusContext, OfflocContext OfflocContext)
+public class AggregateService(IClusteringRepository ClusteringRepository, DeliusContext DeliusContext, OfflocContext OfflocContext, ClusteringContext clusteringContext)
 {
     public async Task<ClusterAggregate?> GetClusterAggregateAsync(string UPCI)
     {
@@ -193,4 +193,21 @@ public class AggregateService(IClusteringRepository ClusteringRepository, Delius
         return aggregate;
     }
 
+    public async Task SetHardLink(string upci, string? primaryRecordKeyAtCreation, DateTime occurredOn)
+    {
+        var cluster = await clusteringContext.Clusters
+             .Include(c => c.Members)
+             .SingleOrDefaultAsync(c => c.UPCI == upci) ?? throw new KeyNotFoundException(upci);
+
+        // Update timestamp
+        cluster.IdentifiedOn = occurredOn;
+
+        var primaryRecord = cluster.Members
+            .SingleOrDefault(m => m.NodeKey == primaryRecordKeyAtCreation) ?? throw new KeyNotFoundException($"{primaryRecordKeyAtCreation} in {upci}");
+
+        // HardLink primary record
+        primaryRecord.HardLink = true;
+
+        await clusteringContext.SaveChangesAsync();
+    }
 }
