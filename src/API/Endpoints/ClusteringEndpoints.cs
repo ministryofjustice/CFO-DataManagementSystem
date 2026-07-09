@@ -30,9 +30,19 @@ public static class ClusteringEndpoints
             .Produces<Cluster>()
             .ProducesProblem(StatusCodes.Status404NotFound);
 
+        group.MapPost("/{upci}/hardlink", HardLinkAsync)
+            .Produces<bool>()
+            .ProducesProblem(StatusCodes.Status404NotFound);
+
         group.RequireAuthorization("read");
 
         return routes;
+    }
+
+    private static async Task<IResult> HardLinkAsync([FromServices] ApiServices services, string upci, [FromBody] string? primaryRecordKeyAtCreation, [FromBody] DateTime occurredOn)
+    {
+        await services.AggregateService.SetHardLink(upci, primaryRecordKeyAtCreation, occurredOn);
+        return Results.Ok();
     }
 
     public static async Task<IResult> GetByIdAsync([FromServices] ApiServices services, int clusterId)
