@@ -31,9 +31,7 @@ public static class ClusteringEndpoints
             .Produces<Cluster>()
             .ProducesProblem(StatusCodes.Status404NotFound);
 
-        group.MapPost("/{upci}/hardlink", HardLinkAsync)
-            .Produces<bool>()
-            .ProducesProblem(StatusCodes.Status404NotFound);
+        group.MapPost("/{upci}/hardlink", HardLinkAsync);
 
         group.RequireAuthorization("read");
 
