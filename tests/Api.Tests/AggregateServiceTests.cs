@@ -40,7 +40,7 @@ public class AggregateServiceTests : IDisposable
         _offlocContext = new OfflocContext(offlocOptions);
 
         _clusteringRepository = new ClusteringRepository(_clusteringContext);
-        _service = new AggregateService(_clusteringRepository, _deliusContext, _offlocContext);
+        _service = new AggregateService(_clusteringRepository, _deliusContext, _offlocContext, _clusteringContext);
     }
 
     [Fact]

@@ -1,4 +1,5 @@
-﻿using API.Services;
+﻿using API.DTOs.Clustering;
+using API.Services;
 using Infrastructure.DTOs;
 using Infrastructure.Entities.Aggregation;
 using Infrastructure.Entities.Clustering;
@@ -30,18 +31,16 @@ public static class ClusteringEndpoints
             .Produces<Cluster>()
             .ProducesProblem(StatusCodes.Status404NotFound);
 
-        group.MapPost("/{upci}/hardlink", HardLinkAsync)
-            .Produces<bool>()
-            .ProducesProblem(StatusCodes.Status404NotFound);
+        group.MapPost("/{upci}/hardlink", HardLinkAsync);
 
         group.RequireAuthorization("read");
 
         return routes;
     }
 
-    private static async Task<IResult> HardLinkAsync([FromServices] ApiServices services, string upci, [FromBody] string? primaryRecordKeyAtCreation, [FromBody] DateTime occurredOn)
+    private static async Task<IResult> HardLinkAsync([FromServices] ApiServices services, string upci, [FromBody] HardLinkUpciDto dto)
     {
-        await services.AggregateService.SetHardLink(upci, primaryRecordKeyAtCreation, occurredOn);
+        await services.AggregateService.SetHardLink(upci, dto.PrimaryRecordKeyAtCreation, dto.OccurredOn);
         return Results.Ok();
     }
 
