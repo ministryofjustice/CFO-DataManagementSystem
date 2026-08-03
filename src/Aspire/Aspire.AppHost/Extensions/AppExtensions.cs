@@ -32,11 +32,15 @@ public static class AppExtensions
         IResourceBuilder<MinioContainerResource> minio,
         IResourceBuilder<RabbitMQServerResource> rabbit,
         DmsDatabaseResources databases,
-        string hostMount)
+        string hostMount,
+        string targetMount)
     {
         builder.AddDmsService<Blocking>("Blocking", rabbit, databases, hostMount);
         builder.AddDmsService<Cleanup>("Cleanup", rabbit, databases, hostMount);
-        builder.AddDmsService<DbInteractions>("DbInteractions", rabbit, databases, hostMount);
+
+        builder.AddDmsService<DbInteractions>("DbInteractions", rabbit, databases, hostMount)
+            .WithEnvironment("DmsFilesBasePath", targetMount); // Override default with linux (sql container) path
+        
         builder.AddDmsService<Delius_Parser>("Delius-Parser", rabbit, databases, hostMount);
         builder.AddDmsService<Import>("Import", rabbit, databases, hostMount);
         builder.AddDmsService<Logging>("Logging", rabbit, databases, hostMount);
