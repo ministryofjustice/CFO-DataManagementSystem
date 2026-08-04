@@ -101,8 +101,7 @@
       "taskDef": "infra/task-definitions/dbinteractions-task-def.json",
       "container": "dbinteractions-container",
       "secrets": [
-        "DMSFilesBasePath",
-        "AuditDb",
+        "DMSFilesBasePath_DbInteractions",
         "DeliusRunningPictureDb",
         "OfflocRunningPictureDb",
         "DeliusStagingDb",
@@ -141,9 +140,7 @@
         "DMSFilesBasePath",
         "S3_BucketName",
         "RabbitMQ",
-        "Sentry_Dsn",
-        "FileSync_ProcessOnStartup",
-        "FileSync_ProcessTimerIntervalSeconds"
+        "Sentry_Dsn"
       ]
     },
     {
