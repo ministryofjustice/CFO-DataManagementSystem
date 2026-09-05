@@ -33,7 +33,7 @@ BEGIN
 	exec CreateDummyCandidate '1FAK0025A','Helen','Hazelnut','03/12/1962 00:00','A1025FK','F00025KE','FALSE','Female','British','Black','DELIUS','WLI','NSP';
 	exec CreateDummyCandidate '1FAK0026A','Zack','Zucchini','08/11/1952 00:00','A1026FK','F00026KE','TRUE','Male','British','Asian','DELIUS','PBI','CBS';
 	exec CreateDummyCandidate '1FAK0027A','Amy','Avocado','03/05/1999 00:00','A1027FK','F00027KE','TRUE','Female','British','White','NOMIS','NWI','N56';
-	exec CreateDummyCandidate '1FAK0028A','Katharine','Kumquat','28/04/2004 00:00','A1028FK','F00028KE','TRUE','Male','British','Black','NOMIS','MTI','HFS';
+	exec CreateDummyCandidate '1FAK0028A','Katharine','Kiwi','28/04/2004 00:00','A1028FK','F00028KE','TRUE','Male','British','Black','NOMIS','MTI','HFS';
 	exec CreateDummyCandidate '1FAK0029A','Cathy','Coconut','09/07/1956 00:00','A1029FK','F00029KE','TRUE','Female','British','Asian','DELIUS','LNI','N02';
 	exec CreateDummyCandidate '1FAK0030A','Dexter','Durian','27/11/1979 00:00','A1030FK','F00030KE','FALSE','Male','Bahamian','White','DELIUS','NLI','NBR';
 	exec CreateDummyCandidate '1FAK0031A','Ellie','Endive','12/03/1973 00:00','A1031FK','F00031KE','TRUE','Female','British','Black','NOMIS','KVI','N23';
