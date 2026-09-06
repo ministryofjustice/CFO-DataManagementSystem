@@ -1,6 +1,35 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "github>ministryofjustice/hmpps-renovate-config:base"
+  ],
+  "baseBranches": ["main"],
+  "prCreation": "immediate",
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["^AutoMapper"],
+      "enabled": false
+    },
+    {
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch"
+    },
+    {
+      "matchUpdateTypes": ["patch"],
+      "minimumReleaseAge": "3 days"
+    },
+    {
+      "matchUpdateTypes": ["minor"],
+      "minimumReleaseAge": "7 days"
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "minimumReleaseAge": "30 days"
+    },
+    {
+      "matchUpdateTypes": ["digest", "pinDigest"],
+      "minimumReleaseAge": "7 days"
+    }
   ]
 }
