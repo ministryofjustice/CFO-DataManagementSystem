@@ -60,30 +60,38 @@ def build_all_databases(databases, build_config, dry_run):
         log(f"ERROR: Build failed for {db}")
         return False
 
+# SQLCMD variables applied to every database publish (harmless if unused by a project)
+SQLCMD_VARS = {
+    "MatchingDb": "MatchingDb",
+    "OfflocRunningPictureDb": "OfflocRunningPictureDb",
+    "DeliusRunningPictureDb": "DeliusRunningPictureDb",
+    "PopulateReferenceTables": "True",
+}
+
 def publish_database(db, server, user, password, build_config, dry_run):
     conn = (
         f"Server={server};Database={db};"
         f"User Id={user};Password={password};"
         f"TrustServerCertificate=True;"
     )
-    
+
     dacpac_path = f"./src/database/{db}/bin/{build_config}/{db}.dacpac"
-    
+
+    var_args = [f"/v:{name}={value}" for name, value in SQLCMD_VARS.items()]
+
     if dry_run:
-        log(f"[DRY RUN] Would publish {dacpac_path} to {server}/{db}")
+        log(f"[DRY RUN] Would publish {dacpac_path} to {server}/{db} with vars {SQLCMD_VARS}")
         return True
-    
+
     log(f"Publishing {db} to {server}...")
-    
+
     try:
         subprocess.check_call([
             "dotnet", "sqlpackage",
             "/action:Publish",
             f"/SourceFile:{dacpac_path}",
             f"/TargetConnectionString:{conn}",
-            "/v:OfflocRunningPictureDb=OfflocRunningPictureDb",
-            "/v:DeliusRunningPictureDb=DeliusRunningPictureDb",
-            "/v:MatchingDb=MatchingDb",
+            *var_args,
             "/Quiet:True"
         ])
         log(f"Successfully published {db}")

@@ -29,7 +29,7 @@ public class FakeDataSeederBackgroundService(
         {
             logger.LogInformation($"Seeding: {Path.GetFileName(file)}");
             var sql = await File.ReadAllTextAsync(file, cancellationToken);
-            using var cmd = new SqlCommand(sql, conn);
+            using var cmd = new SqlCommand(sql, conn) { CommandTimeout = 300 };
             await cmd.ExecuteNonQueryAsync(cancellationToken);
             logger.LogInformation($"Seeded: {Path.GetFileName(file)}");
         }
