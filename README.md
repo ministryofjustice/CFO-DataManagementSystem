@@ -1,4 +1,4 @@
-[![Ministry of Justice Repository Compliance Badge](https://github-community.service.justice.gov.uk/repository-standards/api/CFO-ExternalDataIntegrationSystem/badge?1)](https://github-community.service.justice.gov.uk/repository-standards/CFO-ExternalDataIntegrationSystem)
+[![Ministry of Justice Repository Compliance Badge](https://github-community.service.justice.gov.uk/repository-standards/api/CFO-DataManagementSystem/badge?1)](https://github-community.service.justice.gov.uk/repository-standards/CFO-DataManagementSystem)
 
 HMPPS CFO DMS
 =============
