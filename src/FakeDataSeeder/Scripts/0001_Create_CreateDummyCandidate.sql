@@ -202,7 +202,7 @@ BEGIN
 						,CONVERT(DATE, @DateOfBirth, 103)
 						,@Gender
 						,@Nationality
-						,@IsActive);
+						,0);
 		END
 		--DELIUS 
 		INSERT INTO [DeliusRunningPictureDb].[DeliusRunningPicture].[Offenders]
@@ -331,7 +331,7 @@ BEGIN
 						,CONVERT(DATE, @DateOfBirth, 103)
 						,@Gender
 						,@Nationality
-						,@IsActive);
+						,0);
 			END			
 			--NOMIS			
 			INSERT INTO [OfflocRunningPictureDb].[OfflocRunningPicture].[OffenderAgencies]
@@ -441,6 +441,15 @@ BEGIN
 					,'N')
 		END
 	END
+
+	IF(@PrimaryRecord = 'Nomis')
+	BEGIN
+		UPDATE [OfflocRunningPictureDb].[OfflocRunningPicture].[PersonalDetails]
+		SET [IsActive] = 1
+		WHERE [NOMSnumber] = @NomisNumber;
+	END;
+
+	-- Delius "Active"-ness is determined by Disposals, which are inserted in a later seeding script.
 
 END
 
