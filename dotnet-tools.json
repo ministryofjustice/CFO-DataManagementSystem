@@ -3,7 +3,7 @@
   "isRoot": true,
   "tools": {
     "microsoft.sqlpackage": {
-      "version": "170.2.70",
+      "version": "170.5.96",
       "commands": [
         "sqlpackage"
       ],
