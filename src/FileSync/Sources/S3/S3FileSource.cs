@@ -58,7 +58,7 @@ public class S3FileSource(
 
         await foreach (var response in paginator.Responses.WithCancellation(cancellationToken))
         {
-            files.AddRange(response.S3Objects.Where(o =>
+            files.AddRange((response.S3Objects ?? []).Where(o =>
             {
                 var fileName = Path.GetFileName(o.Key);
                 return Regex.IsMatch(fileName, pattern);
