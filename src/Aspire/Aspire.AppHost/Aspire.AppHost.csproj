@@ -12,7 +12,6 @@
         <PackageReference Include="Aspire.Hosting.Redis" />
         <PackageReference Include="Aspire.Hosting.SqlServer" />
         <PackageReference Include="Aspire.RabbitMQ.Client" />
-        <PackageReference Include="CommunityToolkit.Aspire.Hosting.Minio" />
         <PackageReference Include="CommunityToolkit.Aspire.Hosting.SqlDatabaseProjects" />
     </ItemGroup>
 

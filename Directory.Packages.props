@@ -9,12 +9,10 @@
     <PackageVersion Include="Aspire.RabbitMQ.Client" Version="13.6.4" />
     <PackageVersion Include="AWSSDK.Extensions.NETCore.Setup" Version="4.0.102.11" />
     <PackageVersion Include="AWSSDK.SecurityToken" Version="4.0.101.11" />
-    <PackageVersion Include="CommunityToolkit.Aspire.Hosting.Minio" Version="13.5.0" />
     <PackageVersion Include="CommunityToolkit.Aspire.Hosting.SqlDatabaseProjects" Version="13.6.1" />
     <PackageVersion Include="Autofac" Version="9.3.4" />
     <PackageVersion Include="Autofac.Extensions.DependencyInjection" Version="11.0.2" />
     <PackageVersion Include="AWSSDK.S3" Version="4.0.104.12" />
-    <PackageVersion Include="CommunityToolkit.Aspire.Minio.Client" Version="13.5.0" />
     <PackageVersion Include="coverlet.collector" Version="10.1.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

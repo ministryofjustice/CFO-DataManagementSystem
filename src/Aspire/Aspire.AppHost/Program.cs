@@ -1,4 +1,5 @@
 using Aspire.AppHost.Extensions;
+using System.Runtime.InteropServices;
 using Microsoft.Extensions.Configuration;
 
 var builder = DistributedApplication.CreateBuilder(args);
@@ -8,7 +9,6 @@ var apiKey = builder.AddParameter("apiKey", true);
 var isDevelopment = builder.AddParameter("isDevelopment");
 var rabbitPassword = builder.AddParameter("rabbitPassword", true);
 var sqlPassword = builder.AddParameter("sqlPassword", true);
-var minioPassword = builder.AddParameter("minioPassword", true);
 var seedData = builder.Configuration.GetValue<bool>("Parameters:seedData");
 var startCoreServices = builder.Configuration.GetValue<bool>("Parameters:startCoreServices");
 
@@ -33,13 +33,17 @@ if (startCoreServices)
     .AddRabbitMQ("RabbitMQ", password: rabbitPassword)
     .WithManagementPlugin(port: 15672);
 
-    // MinIO (s3 emulation)
-    var minio = builder
-    .AddMinioContainer("minio", rootPassword: minioPassword)
-    .WithDataVolume("dms-minio-data");
+    // AWS Emulator (s3 emulation). State is in-memory and lost on restart.
+    // Auth is off so local services need no per-run generated credentials.
+    var rpmArch = RuntimeInformation.OSArchitecture == Architecture.Arm64 ? "aarch64" : "x86_64";
+    var awsEmulator = builder
+        .AddDockerfile("aws-emulator", Path.Combine(builder.AppHostDirectory, "AwsEmulator"))
+        .WithBuildArg("RPM_ARCH", rpmArch)
+        .WithArgs("-a", "off")
+        .WithHttpsEndpoint(targetPort: 9297, name: "https");
 
     builder.AddDmsServices(
-        minio,
+        awsEmulator,
         rabbit,
         databases,
         hostMount,

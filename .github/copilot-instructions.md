@@ -46,7 +46,7 @@ All inter-service communication is **asynchronous via RabbitMQ** using the [Rebu
 
 | Service | Type | Role |
 |---------|------|------|
-| `FileSync` | Worker | Monitors MinIO/S3/filesystem for incoming files |
+| `FileSync` | Worker | Monitors AWS Emulator/S3/filesystem for incoming files |
 | `Offloc.Cleaner` | Worker | Cleans raw Offloc (p-NOMIS) files |
 | `Offloc.Parser` | Worker | Parses cleaned Offloc files into DB records |
 | `Delius.Parser` | Worker | Parses nDelius files into DB records |
@@ -129,7 +129,7 @@ All NuGet package versions are centrally managed in `Directory.Packages.props` �
 
 ### Aspire Configuration
 
-`Parameters:startCoreServices` (bool) controls whether RabbitMQ, MinIO, and all worker services are started — set to `false` to run API + Visualiser only. `Parameters:seedData` triggers `FakeDataSeeder` on startup.
+`Parameters:startCoreServices` (bool) controls whether RabbitMQ, AWS Emulator, and all worker services are started — set to `false` to run API + Visualiser only. `Parameters:seedData` triggers `FakeDataSeeder` on startup.
 
 ### Filesystem Layout & Constraints
 

@@ -170,7 +170,7 @@ public class FileSyncBackgroundService(
     
     private async Task<OfflocFile?> GetNextUnprocessedOfflocFileAsync(CancellationToken cancellationToken = default)
     {
-        // Get files from file store (s3 / minio / local file system)
+        // Get files from file store (s3 / aws emulator / local file system)
         logger.LogInformation($"Retrieving Offloc files from {fileSource.GetType().Name} file store...");
         var offlocFileStore = await fileSource.ListOfflocFilesAsync(cancellationToken);
         logger.LogInformation($"Found {offlocFileStore.Count} Offloc file(s) in {fileSource.GetType().Name} file store.");
