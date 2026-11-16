@@ -23,15 +23,25 @@ try
         builder.Services.AddSingleton<FileSource, SystemFileSource>();
         builder.Services.AddSingleton(sp => new FileSourceOptions(builder.Configuration.GetValue<string>("FileSystem:SourceLocation")!));
     }
-    else if(source == "minio")
+    else if (source == "awsemulator")
     {
-        builder.AddMinioClient("minio");
-        builder.Services.AddSingleton<FileSource, MinioFileSource>();
-        builder.Services.AddSingleton(sp => new FileSourceOptions(builder.Configuration.GetValue<string>("MinIO:BucketName")!));
+        // Local development only: the emulator serves HTTPS with a per-run self-signed certificate and auth is off.
+        builder.Services.AddSingleton<IAmazonS3>(_ => new AmazonS3Client(
+            new Amazon.Runtime.BasicAWSCredentials("emulator", "emulator"),
+            new AmazonS3Config
+            {
+                ServiceURL = builder.Configuration.GetValue<string>("AwsEmulator:ServiceUrl")!,
+                ForcePathStyle = true,
+                AuthenticationRegion = "us-east-1",
+                HttpClientFactory = new InsecureHttpClientFactory()
+            }));
+        builder.Services.AddSingleton<FileSource, S3FileSource>();
+        builder.Services.AddSingleton(sp => new FileSourceOptions(builder.Configuration.GetValue<string>("AwsEmulator:BucketName")!));
+        builder.Services.AddHostedService<EmulatorBucketInitializer>();
     }
     else
     {
-        throw new InvalidOperationException("Set 'FileSource' to 'S3', 'FileSystem', or 'MinIO' in configuration.");
+        throw new InvalidOperationException("Set 'FileSourceProvider' to 'S3', 'FileSystem', or 'AwsEmulator' in configuration.");
     }
 
     builder.Services.AddHostedService<FileSyncBackgroundService>();

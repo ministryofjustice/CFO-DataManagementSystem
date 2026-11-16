@@ -3,7 +3,6 @@ global using EnvironmentSetup;
 global using FileSync;
 global using FileSync.Configuration;
 global using FileSync.Core;
-global using FileSync.Sources.Minio;
 global using FileSync.Sources.Local;
 global using FileSync.Sources.S3;
 global using Messaging.Interfaces;

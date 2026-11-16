@@ -16,7 +16,7 @@ CFO DMS is built as a distributed microservices architecture. Data flows through
 **File Ingestion → Parsing/Cleaning → Staging → Import → Running Picture → Blocking/Matching → Clustering → Data Consumption**
 
 ### Pipeline Applications
-1. **File Ingestion** - [**FileSync**](src/FileSync) monitors MinIO/S3/FileSystem storage and syncs incoming files
+1. **File Ingestion** - [**FileSync**](src/FileSync) monitors S3/FileSystem (AWS Emulator locally) storage and syncs incoming files
 2. **Parsing/Cleaning** - [**Offloc.Parser**](src/Offloc.Parser), [**Offloc.Cleaner**](src/Offloc.Cleaner), [**Delius.Parser**](src/Delius.Parser) transform raw p-NOMIS and nDelius files into structured records
 3. **Staging/Import/Running Picture** - [**Import**](src/Import) validates and migrates data from staging to running picture databases
 4. **Blocking/Matching** - [**Blocking**](src/Blocking) generates candidate record pairs, [**Matching.Engine**](src/Matching.Engine) identifies and links related offender records across systems
@@ -132,7 +132,7 @@ When running via Aspire, the following services are available:
 | Service | Purpose | Access | Credentials |
 |---------|---------|--------|-------------|
 | **API** | REST endpoints for querying offender data, searches, and clustering operations | https://localhost:7013/swagger | API Key: `password` |
-| **MinIO** | S3-compatible file storage |  *random port* (check Aspire) | Username: `minioadmin`<br>Password: `minioadmin` |
+| **AWS Emulator** | S3 emulation (in-memory, HTTPS, auth off; bucket `cfo-dms-files`) | *random port* (check Aspire) | None. Seed files go in `src/Aspire/Aspire.AppHost/S3Seed/`. **Limit: 64 MiB of objects per bucket** (hard-coded in the emulator), so large extracts won't fit; use `FileSourceProvider: FileSystem` for those |
 | **MSSQL** | Application databases (staging, running picture, matching, cluster) | `127.0.0.1,61749` | Username: `sa`<br>Password: `P@ssword123!` |
 | **RabbitMQ** | Message broker for inter-service communication | http://localhost:15672 | Username: `guest`<br>Password: `guest` |
 

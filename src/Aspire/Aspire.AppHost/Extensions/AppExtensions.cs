@@ -29,7 +29,7 @@ public static class AppExtensions
 
     public static IDistributedApplicationBuilder AddDmsServices(
         this IDistributedApplicationBuilder builder,
-        IResourceBuilder<MinioContainerResource> minio,
+        IResourceBuilder<ContainerResource> awsEmulator,
         IResourceBuilder<RabbitMQServerResource> rabbit,
         DmsDatabaseResources databases,
         string hostMount,
@@ -50,8 +50,10 @@ public static class AppExtensions
         builder.AddDmsService<Offloc_Parser>("Offloc-Parser", rabbit, databases, hostMount);
         
         builder.AddDmsService<FileSync>("FileSync", rabbit, databases, hostMount)
-            .WithReference(minio).WaitFor(minio)
-            .WithEnvironment("MinIO:BucketName", "cfo-dms-files");
+            .WaitFor(awsEmulator)
+            .WithEnvironment("AwsEmulator:ServiceUrl", awsEmulator.GetEndpoint("https"))
+            .WithEnvironment("AwsEmulator:BucketName", "cfo-dms-files")
+            .WithEnvironment("AwsEmulator:SeedPath", Path.Combine(builder.AppHostDirectory, "S3Seed"));
             
         return builder;
     }
