@@ -52,7 +52,8 @@ public static class AppExtensions
         builder.AddDmsService<FileSync>("FileSync", rabbit, databases, hostMount)
             .WaitFor(awsEmulator)
             .WithEnvironment("AwsEmulator:ServiceUrl", awsEmulator.GetEndpoint("https"))
-            .WithEnvironment("AwsEmulator:BucketName", "cfo-dms-files");
+            .WithEnvironment("AwsEmulator:BucketName", "cfo-dms-files")
+            .WithEnvironment("AwsEmulator:SeedPath", Path.Combine(builder.AppHostDirectory, "S3Seed"));
             
         return builder;
     }

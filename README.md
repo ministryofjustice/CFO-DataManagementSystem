@@ -132,7 +132,7 @@ When running via Aspire, the following services are available:
 | Service | Purpose | Access | Credentials |
 |---------|---------|--------|-------------|
 | **API** | REST endpoints for querying offender data, searches, and clustering operations | https://localhost:7013/swagger | API Key: `password` |
-| **AWS Emulator** | S3 emulation (in-memory, HTTPS, auth off; bucket `cfo-dms-files`) | *random port* (check Aspire) | None |
+| **AWS Emulator** | S3 emulation (in-memory, HTTPS, auth off; bucket `cfo-dms-files`) | *random port* (check Aspire) | None. Seed files go in `src/Aspire/Aspire.AppHost/S3Seed/`. **Limit: 64 MiB of objects per bucket** (hard-coded in the emulator), so large extracts won't fit; use `FileSourceProvider: FileSystem` for those |
 | **MSSQL** | Application databases (staging, running picture, matching, cluster) | `127.0.0.1,61749` | Username: `sa`<br>Password: `P@ssword123!` |
 | **RabbitMQ** | Message broker for inter-service communication | http://localhost:15672 | Username: `guest`<br>Password: `guest` |
 
